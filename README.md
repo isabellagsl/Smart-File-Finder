@@ -17,7 +17,7 @@
 
 ##  Arquitetura Técnica
 
-O projeto tira proveito do modelo pré-treinado `all-MiniLM-L6-v2` da biblioteca Sentence-Transformers. Este modelo foi escolhido por ser altamente otimizado para velocidade e eficiência, sendo perfeito para rodar localmente em ambientes de MVP, mesmo sem o uso de GPUs dedicadas.
+O projeto tira proveito do modelo pré-treinado 'paraphrase-multilingual-MiniLM-L12-v2' da biblioteca Sentence-Transformers. Este modelo foi escolhido por ser altamente otimizado para velocidade e eficiência, sendo perfeito para rodar localmente em ambientes de MVP, mesmo sem o uso de GPUs dedicadas.
 
 ###  Fluxo de Dados
 
@@ -48,7 +48,7 @@ venv\Scripts\activate
 ```
 
 ### 3. Instale as dependências
-Crie um arquivo `requirements.txt` (se ainda não existir) com `streamlit` e `sentence-transformers`, e instale:
+Crie um arquivo `requirements.txt` (se ainda não existir) com `streamlit`, `sentence-transformers` e `pandas`, e instale:
 ```bash
 pip install -r requirements.txt
 ```
