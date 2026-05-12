@@ -1,30 +1,34 @@
-#  Smart File Finder
+#  SmartFile Finder Pro
 
-**Smart File Finder** utiliza Processamento de Linguagem Natural (NLP) para transformar a maneira como pesquisamos em documentos. Ao contrário dos filtros tradicionais baseados em correspondência exata de palavras, este sistema utiliza **Embeddings** para compreender o contexto e o significado real da sua pesquisa.
+**SmartFile Finder Pro** utiliza Processamento de Linguagem Natural (NLP) para transformar a maneira como pesquisamos em documentos. Ao contrário dos filtros tradicionais baseados em correspondência exata de palavras, este sistema utiliza **Embeddings** para compreender o contexto e o significado real da sua pesquisa.
 
 ##  Tecnologias Utilizadas
 
 - **Python 3.9+**
-- **NLP & Embeddings**: `sentence-transformers`
 - **Interface Web**: `streamlit`
+- **NLP & Embeddings**: `sentence-transformers`, `transformers`
+- **Processamento de Documentos**: `PyMuPDF` (PDF), `python-docx` (DOCX), `langchain-text-splitters`
+- **Manipulação de Dados**: `pandas`
 
 ##  Funcionalidades do MVP
 
+- **Suporte Multi-Formato**: Extração de texto de arquivos PDF, DOCX e TXT.
 - **Busca Contextual**: Encontra informações relevantes pelo significado e não apenas por palavras exatas (ex: retorna resultados de "receitas" quando se pesquisa por "comida").
-- **Similaridade de Cosseno**: Ranquia os documentos de forma inteligente, ordenando do mais relevante para o menos relevante.
+- **Similaridade de Cosseno**: Ranquia os documentos de forma inteligente, ordenando do mais relevante para o menos relevante com barra de progresso visual.
 - **Interface Web**: Uma interface simples, intuitiva e rápida, construída inteiramente com Streamlit.
-- **Processamento em Tempo Real**: Gera embeddings instantaneamente, sendo ideal para explorar pequenas e médias coleções de dados de forma ágil.
+- **Processamento em Tempo Real**: Gera embeddings instantaneamente e divide o texto em chunks semânticos para indexação.
 
 ##  Arquitetura Técnica
 
-O projeto tira proveito do modelo pré-treinado 'paraphrase-multilingual-MiniLM-L12-v2' da biblioteca Sentence-Transformers. Este modelo foi escolhido por ser altamente otimizado para velocidade e eficiência, sendo perfeito para rodar localmente em ambientes de MVP, mesmo sem o uso de GPUs dedicadas.
+O projeto tira proveito do modelo pré-treinado `'paraphrase-multilingual-mpnet-base-v2'` da biblioteca Sentence-Transformers. Este modelo oferece alta precisão semântica para múltiplos idiomas. Para o processamento de texto, emprega-se o `RecursiveCharacterTextSplitter` alinhado com o tokenizer do modelo, garantindo o melhor aproveitamento do contexto.
 
 ###  Fluxo de Dados
 
-1. **Input**: O utilizador carrega ficheiros de texto ou insere uma lista de textos através da interface.
-2. **Vetorização**: O modelo converte cada documento (ou linha de texto) num vetor matemático de 384 dimensões.
-3. **Query**: A pesquisa (pergunta) do utilizador é convertida simultaneamente para o mesmo espaço vetorial.
-4. **Match**: O sistema calcula o ângulo entre os vetores (Similaridade de Cosseno) para encontrar as correspondências contextuais mais próximas, retornando os melhores resultados.
+1. **Input**: O usuário faz o upload de múltiplos arquivos (PDF, DOCX, TXT) através da barra lateral.
+2. **Extração e Chunking**: O texto é extraído dos documentos e dividido em partes menores (chunks de 500 tokens) mantendo a estrutura dos parágrafos.
+3. **Vetorização**: O modelo converte cada chunk de texto num vetor matemático de embeddings.
+4. **Query**: A pesquisa do usuário é convertida simultaneamente para o mesmo espaço vetorial.
+5. **Match**: O sistema calcula a Similaridade de Cosseno para encontrar as correspondências contextuais mais próximas, retornando os trechos exatos com pontuação de relevância.
 
 ##  Como Executar
 
@@ -48,7 +52,7 @@ venv\Scripts\activate
 ```
 
 ### 3. Instale as dependências
-Crie um arquivo `requirements.txt` (se ainda não existir) com `streamlit`, `sentence-transformers` e `pandas`, e instale:
+O projeto já conta com um arquivo `requirements.txt` gerado com todas as dependências (como `streamlit`, `sentence-transformers`, `PyMuPDF`, `python-docx`, `langchain-text-splitters`, etc). Instale com:
 ```bash
 pip install -r requirements.txt
 ```
